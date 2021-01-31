@@ -64,7 +64,7 @@ def main():
                   detection_list[i].box.rb.y, 
                   detection_list[i].result_text, 
                   detection_list[i].confidence)
-           
+##############################################################################################################################################################
             d = math.sqrt(pow(detection_list[i].box.lt.x - detection_list[i].box.rb.x,2)+pow(detection_list[i].box.lt.y - detection_list[i].box.rb.y,2)) 
 
             if (d > 600):
@@ -74,6 +74,7 @@ def main():
                 bufferSize = 1024
                 UDPClientSocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
                 UDPClientSocket.sendto(bytesToSend,serverAddressPort)
+##############################################################################################################################################################
 
         if jpeg_image == None:
             print("The jpeg image for present is None")
