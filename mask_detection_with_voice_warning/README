@@ -1,7 +1,11 @@
 ---main.py---
 
-Added a function to measure the size of box to eliminate noices, and send detection result to the computer through UDP connection
-
+Added a function to measure the size of box to eliminate noises, and send detection result to the computer through UDP connection
+Measures distance between two people
 --ATL server.py---
 
 Listens any incoming data from ATLAS and play warning sounds according to the data received
+1. too close warning
+2. wear mask warning
+3. improper wearing mask warning
+4. good to pass the gate
