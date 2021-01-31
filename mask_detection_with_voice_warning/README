@@ -1,6 +1,6 @@
 ---main.py---
 
-Added a function to measure the size of box to eliminate noises, and send detection result to the computer through UDP connection
+Added a function to measure the size of box to eliminate noices, and send detection result to the computer through UDP connection
 
 --ATL server.py---
 

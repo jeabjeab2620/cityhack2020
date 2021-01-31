@@ -64,17 +64,36 @@ def main():
                   detection_list[i].box.rb.y, 
                   detection_list[i].result_text, 
                   detection_list[i].confidence)
-##############################################################################################################################################################
+           
             d = math.sqrt(pow(detection_list[i].box.lt.x - detection_list[i].box.rb.x,2)+pow(detection_list[i].box.lt.y - detection_list[i].box.rb.y,2)) 
 
-            if (d > 600):
+            if (d > 80):
                 msg = detection_list[i].result_text
                 bytesToSend = str.encode(msg)
                 serverAddressPort = ("192.168.1.22", 20001)
                 bufferSize = 1024
                 UDPClientSocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
                 UDPClientSocket.sendto(bytesToSend,serverAddressPort)
-##############################################################################################################################################################
+                
+            for j in range(i+1, len(detection_list)):
+                x_cor_1 = detection_list[i].box.lt.x + abs((detection_list[i].box.lt.x - detection_list[i].box.rb.x)) / 2
+                y_cor_1 = detection_list[i].box.lt.y + abs((detection_list[i].box.lt.y - detection_list[i].box.rb.y)) / 2
+                x_cor_2 = detection_list[j].box.lt.x + abs((detection_list[j].box.lt.x - detection_list[j].box.rb.x)) / 2
+                y_cor_2 = detection_list[j].box.lt.y + abs((detection_list[j].box.lt.y - detection_list[j].box.rb.y)) / 2
+                width_1 = abs(detection_list[i].box.lt.x - detection_list[i].box.rb.x)
+                width_2 = abs(detection_list[j].box.lt.x - detection_list[j].box.rb.x)
+                width_thrs = abs(min(width_1, width_2)*3)
+                diss = math.sqrt(pow(x_cor_1 - x_cor_2,2)+pow(y_cor_1 - y_cor_2,2))
+                #print("Too close!!!!!!", j , "distance:",diss,"threshhold:",width_thrs)
+                if width_1 > 50 and width_2 > 50:
+                  if diss < width_thrs:
+                    msg = "too_close"
+                    bytesToSend = str.encode(msg)
+                    serverAddressPort = ("192.168.1.22", 20001)
+                    bufferSize = 1024
+                    UDPClientSocket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+                    UDPClientSocket.sendto(bytesToSend,serverAddressPort)
+
 
         if jpeg_image == None:
             print("The jpeg image for present is None")
